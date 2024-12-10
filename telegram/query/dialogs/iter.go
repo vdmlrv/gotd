@@ -134,7 +134,10 @@ func (m *Iterator) apply(r tg.MessagesDialogsClass) error {
 	for _, dlg := range dialogs {
 		var key DialogKey
 		if err := key.FromPeer(dlg.GetPeer()); err == nil {
-			last = msgMap[key]
+			msg, ok := msgMap[key]
+			if ok {
+				last = msg
+			}
 		}
 
 		p, err := entities.ExtractPeer(dlg.GetPeer())
